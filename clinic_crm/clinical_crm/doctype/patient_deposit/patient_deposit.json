@@ -1,0 +1,296 @@
+{
+ "actions": [],
+ "autoname": "PD-.YYYY.-.###",
+ "creation": "2026-06-25 00:00:00",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_patient_info",
+  "patient",
+  "patient_name",
+  "col_patient_right",
+  "coordinator",
+  "patient_coordinator",
+  "submitted_on",
+  "section_payment",
+  "currency",
+  "deposit_type",
+  "amount",
+  "col_payment_right",
+  "deposit_date",
+  "payment_ref",
+  "section_evidence",
+  "evidence",
+  "evidence_flagged",
+  "shared_evidence",
+  "linked_deposit",
+  "section_notes",
+  "notes",
+  "section_status",
+  "status",
+  "review_reason",
+  "col_status_right",
+  "verified_by",
+  "verified_on"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_patient_info",
+   "fieldtype": "Section Break",
+   "label": "Patient Information"
+  },
+  {
+   "fieldname": "patient",
+   "fieldtype": "Link",
+   "label": "Patient",
+   "options": "CRM Lead",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "patient.lead_name",
+   "fieldname": "patient_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Patient Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "col_patient_right",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "__user",
+   "fieldname": "coordinator",
+   "fieldtype": "Link",
+   "label": "Coordinator",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "submitted_on",
+   "fieldtype": "Datetime",
+   "label": "Deposit Created On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_payment",
+   "fieldtype": "Section Break",
+   "label": "Payment Details"
+  },
+  {
+   "default": "SAR",
+   "fieldname": "currency",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "deposit_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Deposit Type",
+   "options": "Appointment\nProcedure",
+   "reqd": 1
+  },
+  {
+   "description": "Amount in SAR as shown on receipt.",
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Amount",
+   "options": "currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "col_payment_right",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Today",
+   "fieldname": "deposit_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Deposit Date"
+  },
+  {
+   "description": "Bank transfer or POS reference number.",
+   "fieldname": "payment_ref",
+   "fieldtype": "Data",
+   "label": "Payment Reference"
+  },
+  {
+   "fieldname": "section_evidence",
+   "fieldtype": "Section Break",
+   "label": "Receipt & Evidence"
+  },
+  {
+   "description": "Upload receipt: JPG, PNG, or PDF. Cannot be replaced once saved.",
+   "fieldname": "evidence",
+   "fieldtype": "Attach",
+   "label": "Evidence"
+  },
+  {
+   "default": "0",
+   "fieldname": "evidence_flagged",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Evidence Flagged",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "description": "Enable if one receipt covers both Appointment and Procedure deposits.",
+   "fieldname": "shared_evidence",
+   "fieldtype": "Check",
+   "label": "Shared Evidence"
+  },
+  {
+   "depends_on": "eval:doc.shared_evidence==1",
+   "fieldname": "linked_deposit",
+   "fieldtype": "Link",
+   "label": "Linked Deposit",
+   "options": "Patient Deposit"
+  },
+  {
+   "fieldname": "section_status",
+   "fieldtype": "Section Break",
+   "label": "Verification & Review"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Status",
+   "read_only": 1
+  },
+  {
+   "fieldname": "review_reason",
+   "fieldtype": "Small Text",
+   "label": "Review Reason",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "col_status_right",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "verified_by",
+   "fieldtype": "Link",
+   "label": "Verified By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "verified_on",
+   "fieldtype": "Datetime",
+   "label": "Verified On",
+   "read_only": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_notes",
+   "fieldtype": "Section Break",
+   "label": "Internal Notes"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  },
+  {
+   "fetch_from": "coordinator.full_name",
+   "fieldname": "patient_coordinator",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Patient Coordinator",
+   "read_only": 1
+  }
+ ],
+ "links": [],
+ "max_attachments": 5,
+ "modified": "2026-06-27 13:26:16.651441",
+ "modified_by": "Administrator",
+ "module": "Clinical CRM",
+ "name": "Patient Deposit",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Coordinator",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Finance User",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Team Lead",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "permlevel": 1,
+   "read": 1,
+   "role": "Finance User",
+   "write": 1
+  },
+  {
+   "permlevel": 1,
+   "read": 1,
+   "role": "Coordinator"
+  },
+  {
+   "permlevel": 1,
+   "read": 1,
+   "role": "Team Lead",
+   "write": 1
+  },
+  {
+   "permlevel": 1,
+   "read": 1,
+   "role": "System Manager",
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "row_format": "Dynamic",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "patient_name",
+ "track_changes": 1,
+ "track_seen": 1
+}
