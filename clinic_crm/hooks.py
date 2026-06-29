@@ -44,6 +44,7 @@ app_license = "mit"
 
 # include js in doctype views
 # doctype_js = {"doctype" : "public/js/doctype.js"}
+# Note: CRM Lead is rendered by Frappe CRM (Vue SPA) — use CRM Form Script instead
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -87,6 +88,15 @@ app_license = "mit"
 
 # before_install = "clinic_crm.install.before_install"
 # after_install = "clinic_crm.install.after_install"
+
+after_install = [
+	"clinic_crm.clinical_crm.setup_workflow.create_deposit_workflow",
+	"clinic_crm.clinical_crm.setup_deposits_view.create_deposits_view",
+]
+after_migrate = [
+	"clinic_crm.clinical_crm.setup_workflow.create_deposit_workflow",
+	"clinic_crm.clinical_crm.setup_deposits_view.create_deposits_view",
+]
 
 # Uninstallation
 # ------------
@@ -146,6 +156,20 @@ app_license = "mit"
 # 	}
 # }
 
+connections = {
+	"CRM Lead": {
+		"Patient Deposit": {
+			"fieldname": "patient"
+		}
+	}
+}
+
+doc_events = {
+	"Patient Deposit": {
+		"after_insert": "clinic_crm.events.check_evidence_attachment",
+	}
+}
+
 # Scheduled Tasks
 # ---------------
 
@@ -166,6 +190,12 @@ app_license = "mit"
 # 		"clinic_crm.tasks.monthly"
 # 	],
 # }
+
+scheduler_events = {
+	"daily": [
+		"clinic_crm.events.check_evidence_grace_period",
+	]
+}
 
 # Testing
 # -------
